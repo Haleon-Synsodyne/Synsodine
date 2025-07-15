@@ -42,45 +42,33 @@
         <p>ننصحك بزيارة طبيب الأسنان في أقرب وقت للحصول على العلاج المناسب</p>
     </div>
 
-    <script>
-        async function fetchJotFormScore() {
-            const formID = '251874452609060'; // Your Form ID
-            const apiKey = '5a25e8a7c4a8f66d05d4eded99cedea7'; // Replace with your API key
-            const url = `https://api.jotform.com/form/${formID}/submissions?apiKey=${apiKey}&limit=1`;
+   <script>
+    function getScoreFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        const score = parseInt(params.get('score')) || 0;
+        updateScoreDisplay(score);
+    }
 
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                const latestSubmission = data.content[0];
-                const score = parseInt(latestSubmission.answers['#input_181'].answer) || 0; // Default to 0 if NaN
-                updateScoreDisplay(score);
-            } catch (error) {
-                console.error('Error fetching JotForm data:', error);
-                alert('تعذر جلب النتيجة من JotForm. يرجى المحاولة لاحقًا.');
-            }
+    function updateScoreDisplay(score) {
+        const sections = document.querySelectorAll('.result-section');
+        sections.forEach(section => section.classList.remove('active'));
+
+        const scoreElements = document.querySelectorAll('.score-number');
+        scoreElements.forEach(element => element.textContent = isNaN(score) ? 'NaN' : score);
+
+        if (score >= 15 && score <= 35) {
+            document.getElementById('result-low').classList.add('active');
+        } else if (score >= 36 && score <= 70) {
+            document.getElementById('result-moderate').classList.add('active');
+        } else if (score >= 71 && score <= 105) {
+            document.getElementById('result-high').classList.add('active');
+        } else {
+            // Default to low if score is outside expected range
+            document.getElementById('result-low').classList.add('active');
         }
+    }
 
-        function updateScoreDisplay(score) {
-            const sections = document.querySelectorAll('.result-section');
-            sections.forEach(section => section.classList.remove('active'));
-
-            const scoreElements = document.querySelectorAll('.score-number');
-            scoreElements.forEach(element => element.textContent = isNaN(score) ? 'NaN' : score);
-
-            if (score >= 15 && score <= 35) {
-                document.getElementById('result-low').classList.add('active');
-            } else if (score >= 36 && score <= 70) {
-                document.getElementById('result-moderate').classList.add('active');
-            } else if (score >= 71 && score <= 105) {
-                document.getElementById('result-high').classList.add('active');
-            } else {
-                // Default to low if score is outside expected range
-                document.getElementById('result-low').classList.add('active');
-            }
-        }
-
-        window.onload = fetchJotFormScore;
-        setInterval(fetchJotFormScore, 60000); // Update every minute
-    </script>
+    window.onload = getScoreFromURL;
+</script>
 </body>
 </html>
