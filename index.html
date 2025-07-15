@@ -52,7 +52,7 @@
                 const response = await fetch(url);
                 const data = await response.json();
                 const latestSubmission = data.content[0];
-                const score = parseInt(latestSubmission.answers['3'].answer) || 0; // Default to 0 if NaN
+                const score = parseInt(latestSubmission.answers['#input_181'].answer) || 0; // Default to 0 if NaN
                 updateScoreDisplay(score);
             } catch (error) {
                 console.error('Error fetching JotForm data:', error);
