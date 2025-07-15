@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Assessment Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="result-low" class="result-section">
+        <h2>نتيجتك</h2>
+        <div class="score-circle low-sensitivity">
+            <span class="score-number">20</span>
+        </div>
+        <p>انت تتمتع بأسنان سليمة.</p>
+        <p>للحصول علي كود خصم Sensodyne عند الطلب من نون</p>
+        <button class="noon-button" onclick="window.open('https://noon.com', '_blank')">XXXX_XXXX</button>
+        <div class="combined-line">
+            لمعرفة المزيد عن العناية بصحة الفم والأسنان
+            <a href="https://www.google.com/aclk?sa=L&ai=DChsSEwjsh6H92L6OAxVYOAYAHa1BPRkYACICCAEQARoCd3M&co=1&ase=2&gclid=Cj0KCQjw-NfDBhDyARIsAD-ILeA54pM-CyfB54kVh8t8eM_4bVLm7pXyDQtXGA21n2oT71NVOUITxLsaAoDzEALw_wcB&cce=2&category=acrcp_v1_32&sig=AOD64_0mGzla94RopBH7Hxc3JPs370GabA&q&nis=4&adurl&ved=2ahUKEwi-hp392L6OAxUdSaQEHUYWOOwQ0Qx6BAgNEAE" target="_blank">اضغط هنا</a>
+        </div></div>
+
+    <div id="result-moderate" class="result-section">
+        <h2>نتيجتك</h2>
+        <div class="score-circle moderate-sensitivity">
+            <span class="score-number">50</span>
+        </div>
+        <p>قد تكون مصاباً بحساسية الأسنان.</p>
+        <p>للحصول علي كود خصم Sensodyne عند الطلب من نون</p>
+        <button class="noon-button" onclick="window.open('https://noon.com', '_blank')"اXXXX_XXXX</button>
+        <p>استشر طبيبك بخصوص أفضل الحلول للتغلب علي حساسية الأسنان</p>
+    </div>
+
+    <div id="result-high" class="result-section">
+        <h2>نتيجتك</h2>
+        <div class="score-circle high-sensitivity">
+            <span class="score-number">90</span>
+        </div>
+        <p>يبدو أن لديك مشكلة في الأسنان تحتاج إلى عناية.</p>
+        <p>للحصول علي كود خصم Sensodyne عند الطلب من نون</p>
+        <button class="noon-button" onclick="window.open('https://noon.com', '_blank')">XXXX_XXXX</button>
+        <p>ننصحك بزيارة طبيب الأسنان في أقرب وقت للحصول على العلاج المناسب</p>
+    </div>
+
+    <script>
+        async function fetchJotFormScore() {
+            const formID = '251874452609060'; // Your Form ID
+            const apiKey = '5a25e8a7c4a8f66d05d4eded99cedea7'; // Replace with your API key
+            const url = `https://api.jotform.com/form/${formID}/submissions?apiKey=${apiKey}&limit=1`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const latestSubmission = data.content[0];
+                const score = parseInt(latestSubmission.answers['3'].answer) || 0; // Default to 0 if NaN
+                updateScoreDisplay(score);
+            } catch (error) {
+                console.error('Error fetching JotForm data:', error);
+                alert('تعذر جلب النتيجة من JotForm. يرجى المحاولة لاحقًا.');
+            }
+        }
+
+        function updateScoreDisplay(score) {
+            const sections = document.querySelectorAll('.result-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const scoreElements = document.querySelectorAll('.score-number');
+            scoreElements.forEach(element => element.textContent = isNaN(score) ? 'NaN' : score);
+
+            if (score >= 15 && score <= 35) {
+                document.getElementById('result-low').classList.add('active');
+            } else if (score >= 36 && score <= 70) {
+                document.getElementById('result-moderate').classList.add('active');
+            } else if (score >= 71 && score <= 105) {
+                document.getElementById('result-high').classList.add('active');
+            } else {
+                // Default to low if score is outside expected range
+                document.getElementById('result-low').classList.add('active');
+            }
+        }
+
+        window.onload = fetchJotFormScore;
+        setInterval(fetchJotFormScore, 60000); // Update every minute
+    </script>
+</body>
+</html>
