@@ -55,7 +55,7 @@
    <script>
     function getScoreFromURL() {
         const params = new URLSearchParams(window.location.search);
-        const score = parseInt(params.get('score')) || 60;
+        const score = parseInt(params.get('score')) || 0;
         updateScoreDisplay(score);
     }
 
