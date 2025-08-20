@@ -100,25 +100,27 @@ h1 {
     transform: translate(-50%, -50%);
     font-size: 1em;
     font-weight: bold;
-    color: #fff;
 }
 
-/* Low Sensitivity - Green */
+/* Low Sensitivity - Light Blue (calm & soft like the right side of logo) */
 .low-sensitivity {
-    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-    border-color: #2e7d32;
+    background: linear-gradient(135deg, #e1f5fe 0%, #81d4fa 100%);
+    border-color: #29b6f6;
+    color: #0d47a1; /* Dark blue text for readability */
 }
 
-/* Moderate Sensitivity - Orange */
+/* Moderate Sensitivity - Mid Blue (balanced tone from logo center) */
 .moderate-sensitivity {
-    background: linear-gradient(135deg, #FF9800 0%, #f57c00 100%);
-    border-color: #e65100;
+    background: linear-gradient(135deg, #64b5f6 0%, #1e88e5 100%);
+    border-color: #1565c0;
+    color: #0d47a1; /* White text for contrast */
 }
 
-/* High Sensitivity - Red */
+/* High Sensitivity - Deep Navy Blue (like left curve of logo) */
 .high-sensitivity {
-    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
-    border-color: #b71c1c;
+    background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+    border-color: #082567;
+    color: #64b5f6; /* White text for readability */
 }
 
 h2 {
