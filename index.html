@@ -1,89 +1,162 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dental Assessment Results</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dental Assessment Results</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Fixed results container -->
-    <div class="results-container">
-        <div id="result-low" class="result-section">
-            <h2>نتيجتك</h2>
-            <div class="score-circle low-sensitivity">
-                <span class="score-number">20</span>
-            </div>
-            <p>انت تتمتع بأسنان سليمة.</p>
-            <p>
-                للحصول علي كود خصم Sensodyne عند الطلب من 
-                <img src="noon.png" alt="نون" style="height: 40px; vertical-align: middle;">
-            </p>
-            <button class="noon-button" onclick="window.open('https://noon.com', '_blank')">XXXX_XXXX</button>
-            <div class="combined-line">
-                لمعرفة المزيد عن العناية بصحة الفم والأسنان
-                <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">اضغط هنا</a>
-            </div>
-        </div>
-
-        <div id="result-moderate" class="result-section">
-            <h2>نتيجتك</h2>
-            <div class="score-circle moderate-sensitivity">
-                <span class="score-number">50</span>
-            </div>
-            <p>قد تكون مصاباً بحساسية الأسنان.</p>
-            <p>
-                للحصول علي كود خصم Sensodyne عند الطلب من 
-                <img src="noon.png" alt="نون" style="height: 40px; vertical-align: middle;">
-            </p>
-            <button class="noon-button" onclick="window.open('https://noon.com', '_blank')">XXXX_XXXX</button>
-            <p>استشر طبيبك بخصوص أفضل الحلول
-            للتغلب علي حساسية الأسنان</p>
-        </div>
-
-        <div id="result-high" class="result-section">
-            <h2>نتيجتك</h2>
-            <div class="score-circle high-sensitivity">
-                <span class="score-number">90</span>
-            </div>
-            <p>يبدو أنك تعاني بالفعل من مشكلة حساسيةالأسنان.</p>
-            <p>
-                للحصول علي كود خصم Sensodyne عند الطلب من 
-                <img src="noon.png" alt="نون" style="height: 40px; vertical-align: middle;">
-            </p>
-            <button class="noon-button" onclick="window.open('https://noon.com', '_blank')">XXXX_XXXX</button>
-            <p>ننصحك بزيارة طبيب الأسنان في أقرب وقت للحصول على العلاج المناسب</p>
-        </div>
+  <!-- Results container -->
+  <div class="results-container">
+    <div id="result-low" class="result-section">
+      <h2 id="title-low"></h2>
+      <div class="score-circle low-sensitivity">
+        <span class="score-number">0</span>
+      </div>
+      <p id="low-text"></p>
+      <p id="low-discount"></p>
+      <button class="noon-button" id="low-button"></button>
+      <div class="combined-line" id="low-extra"></div>
     </div>
 
-    <script>
-        function getScoreFromURL() {
-            const params = new URLSearchParams(window.location.search);
-            const score = parseInt(params.get('score')) || 0;
-            updateScoreDisplay(score);
-        }
+    <div id="result-moderate" class="result-section">
+      <h2 id="title-moderate"></h2>
+      <div class="score-circle moderate-sensitivity">
+        <span class="score-number">0</span>
+      </div>
+      <p id="moderate-text"></p>
+      <p id="moderate-discount"></p>
+      <button class="noon-button" id="moderate-button"></button>
+      <p id="moderate-extra"></p>
+    </div>
 
-        function updateScoreDisplay(score) {
-            const sections = document.querySelectorAll('.result-section');
-            sections.forEach(section => section.classList.remove('active'));
+    <div id="result-high" class="result-section">
+      <h2 id="title-high"></h2>
+      <div class="score-circle high-sensitivity">
+        <span class="score-number">0</span>
+      </div>
+      <p id="high-text"></p>
+      <p id="high-discount"></p>
+      <button class="noon-button" id="high-button"></button>
+      <p id="high-extra"></p>
+    </div>
+  </div>
 
-            const scoreElements = document.querySelectorAll('.score-number');
-            scoreElements.forEach(element => element.textContent = isNaN(score) ? 'NaN' : score);
+  <script>
+    const translations = {
+      ar: {
+        titles: { low: "نتيجتك", moderate: "نتيجتك", high: "نتيجتك" },
+        lowText: "انت تتمتع بأسنان سليمة.",
+        lowDiscount: `للحصول علي كود خصم Sensodyne عند الطلب من <img src="noon.png" alt="نون" style="height: 40px; vertical-align: middle;">`,
+        lowButton: "XXXX_XXXX",
+        lowExtra: `لمعرفة المزيد عن العناية بصحة الفم والأسنان <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">اضغط هنا</a>`,
+        moderateText: "قد تكون مصاباً بحساسية الأسنان.",
+        moderateDiscount: `للحصول علي كود خصم Sensodyne عند الطلب من <img src="noon.png" alt="نون" style="height: 40px; vertical-align: middle;">`,
+        moderateButton: "XXXX_XXXX",
+        moderateExtra: "استشر طبيبك بخصوص أفضل الحلول للتغلب علي حساسية الأسنان",
+        highText: "يبدو أنك تعاني بالفعل من مشكلة حساسية الأسنان.",
+        highDiscount: `للحصول علي كود خصم Sensodyne عند الطلب من <img src="noon.png" alt="نون" style="height: 40px; vertical-align: middle;">`,
+        highButton: "XXXX_XXXX",
+        highExtra: "ننصحك بزيارة طبيب الأسنان في أقرب وقت للحصول على العلاج المناسب",
+        dir: "rtl",
+        lang: "ar"
+      },
+      en: {
+        titles: { low: "Your Result", moderate: "Your Result", high: "Your Result" },
+        lowText: "You have healthy teeth.",
+        lowDiscount: `Get a Sensodyne discount code when ordering from <img src="noon.png" alt="Noon" style="height: 40px; vertical-align: middle;">`,
+        lowButton: "XXXX_XXXX",
+        lowExtra: `Learn more about oral and dental health care <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Click here</a>`,
+        moderateText: "You may be suffering from tooth sensitivity.",
+        moderateDiscount: `Get a Sensodyne discount code when ordering from <img src="noon.png" alt="Noon" style="height: 40px; vertical-align: middle;">`,
+        moderateButton: "XXXX_XXXX",
+        moderateExtra: "Consult your dentist about the best solutions to overcome tooth sensitivity.",
+        highText: "It seems you are already suffering from tooth sensitivity problems.",
+        highDiscount: `Get a Sensodyne discount code when ordering from <img src="noon.png" alt="Noon" style="height: 40px; vertical-align: middle;">`,
+        highButton: "XXXX_XXXX",
+        highExtra: "We recommend visiting your dentist as soon as possible to get the right treatment.",
+        dir: "ltr",
+        lang: "en"
+      },
+      fr: {
+        titles: { low: "Votre Résultat", moderate: "Votre Résultat", high: "Votre Résultat" },
+        lowText: "Vous avez des dents saines.",
+        lowDiscount: `Obtenez un code de réduction Sensodyne lors de votre commande sur <img src="noon.png" alt="Noon" style="height: 40px; vertical-align: middle;">`,
+        lowButton: "XXXX_XXXX",
+        lowExtra: `En savoir plus sur les soins de la santé bucco-dentaire <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Cliquez ici</a>`,
+        moderateText: "Vous pourriez souffrir de sensibilité dentaire.",
+        moderateDiscount: `Obtenez un code de réduction Sensodyne lors de votre commande sur <img src="noon.png" alt="Noon" style="height: 40px; vertical-align: middle;">`,
+        moderateButton: "XXXX_XXXX",
+        moderateExtra: "Consultez votre dentiste pour connaître les meilleures solutions afin de surmonter la sensibilité dentaire.",
+        highText: "Il semble que vous souffriez déjà de problèmes de sensibilité dentaire.",
+        highDiscount: `Obtenez un code de réduction Sensodyne lors de votre commande sur <img src="noon.png" alt="Noon" style="height: 40px; vertical-align: middle;">`,
+        highButton: "XXXX_XXXX",
+        highExtra: "Nous vous recommandons de consulter votre dentiste dès que possible pour obtenir le traitement approprié.",
+        dir: "ltr",
+        lang: "fr"
+      }
+    };
 
-            if (score >= 15 && score <= 35) {
-                document.getElementById('result-low').classList.add('active');
-            } else if (score >= 36 && score <= 70) {
-                document.getElementById('result-moderate').classList.add('active');
-            } else if (score >= 71 && score <= 105) {
-                document.getElementById('result-high').classList.add('active');
-            } else {
-                // Default to low if score is outside expected range
-                document.getElementById('result-low').classList.add('active');
-            }
-        }
+    function getParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        score: parseInt(params.get("score")) || 0,
+        lang: params.get("lang") || "ar"
+      };
+    }
 
-        window.onload = getScoreFromURL;
-    </script>
+    function updateContent(score, lang) {
+      const t = translations[lang] || translations.ar;
+
+      document.documentElement.lang = t.lang;
+      document.documentElement.dir = t.dir;
+
+      // Titles
+      document.getElementById("title-low").textContent = t.titles.low;
+      document.getElementById("title-moderate").textContent = t.titles.moderate;
+      document.getElementById("title-high").textContent = t.titles.high;
+
+      // Low
+      document.getElementById("low-text").innerHTML = t.lowText;
+      document.getElementById("low-discount").innerHTML = t.lowDiscount;
+      document.getElementById("low-button").textContent = t.lowButton;
+      document.getElementById("low-extra").innerHTML = t.lowExtra;
+
+      // Moderate
+      document.getElementById("moderate-text").innerHTML = t.moderateText;
+      document.getElementById("moderate-discount").innerHTML = t.moderateDiscount;
+      document.getElementById("moderate-button").textContent = t.moderateButton;
+      document.getElementById("moderate-extra").innerHTML = t.moderateExtra;
+
+      // High
+      document.getElementById("high-text").innerHTML = t.highText;
+      document.getElementById("high-discount").innerHTML = t.highDiscount;
+      document.getElementById("high-button").textContent = t.highButton;
+      document.getElementById("high-extra").innerHTML = t.highExtra;
+
+      // Score logic
+      const sections = document.querySelectorAll(".result-section");
+      sections.forEach(section => section.classList.remove("active"));
+
+      const scoreElements = document.querySelectorAll(".score-number");
+      scoreElements.forEach(el => (el.textContent = score));
+
+      if (score >= 15 && score <= 35) {
+        document.getElementById("result-low").classList.add("active");
+      } else if (score >= 36 && score <= 70) {
+        document.getElementById("result-moderate").classList.add("active");
+      } else if (score >= 71 && score <= 105) {
+        document.getElementById("result-high").classList.add("active");
+      } else {
+        document.getElementById("result-low").classList.add("active");
+      }
+    }
+
+    window.onload = () => {
+      const { score, lang } = getParams();
+      updateContent(score, lang);
+    };
+  </script>
 </body>
-
 </html>
