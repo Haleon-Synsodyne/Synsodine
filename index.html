@@ -5,9 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dental Assessment Results</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Add this style to hide sections by default */
+    .result-section {
+      display: none;
+    }
+    /* This will show the section that the script makes active */
+    .result-section.active {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <!-- Results container -->
   <div class="results-container">
     <div id="result-low" class="result-section">
       <h2 id="title-low"></h2>
@@ -16,7 +25,7 @@
       </div>
       <p id="low-text"></p>
       <p id="low-discount"></p>
-      <button class="noon-button" onclick="window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_',id="low-button"></button>
+      <button class="noon-button" onclick="window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_')" id="low-button"></button>
       <div class="combined-line" id="low-extra"></div>
     </div>
 
@@ -27,7 +36,7 @@
       </div>
       <p id="moderate-text"></p>
       <p id="moderate-discount"></p>
-      <button class="noon-button" onclick="window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_', id="moderate-button"></button>
+      <button class="noon-button" onclick="window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_')" id="moderate-button"></button>
       <p id="moderate-extra"></p>
     </div>
 
@@ -38,7 +47,7 @@
       </div>
       <p id="high-text"></p>
       <p id="high-discount"></p>
-      <button class="noon-button" onclick="window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_', id="high-button"></button>
+      <button class="noon-button" onclick="window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_')" id="high-button"></button>
       <p id="high-extra"></p>
     </div>
   </div>
@@ -137,20 +146,23 @@
 
       // Score logic
       const sections = document.querySelectorAll(".result-section");
-      sections.forEach(section => section.classList.remove("active"));
+      sections.forEach(section => section.style.display = 'none'); // Use style to hide
 
       const scoreElements = document.querySelectorAll(".score-number");
       scoreElements.forEach(el => (el.textContent = score));
 
+      let activeSection;
       if (score >= 15 && score <= 35) {
-        document.getElementById("result-low").classList.add("active");
+        activeSection = document.getElementById("result-low");
       } else if (score >= 36 && score <= 70) {
-        document.getElementById("result-moderate").classList.add("active");
+        activeSection = document.getElementById("result-moderate");
       } else if (score >= 71 && score <= 105) {
-        document.getElementById("result-high").classList.add("active");
+        activeSection = document.getElementById("result-high");
       } else {
-        document.getElementById("result-low").classList.add("active");
+        activeSection = document.getElementById("result-low");
       }
+      activeSection.classList.add("active"); // Add active class
+      activeSection.style.display = 'block'; // Use style to show
     }
 
     window.onload = () => {
@@ -160,4 +172,3 @@
   </script>
 </body>
 </html>
-
