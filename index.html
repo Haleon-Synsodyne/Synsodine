@@ -110,8 +110,8 @@
     function getParams() {
       const params = new URLSearchParams(window.location.search);
       return {
-        score: parseInt(params.get("score")) || 50,
-        lang: params.get("lang") || "en"
+        score: parseInt(params.get("score")) || 0,
+        lang: params.get("lang") || "ar"
       };
     }
 
@@ -171,4 +171,5 @@
     };
   </script>
 </body>
+
 </html>
