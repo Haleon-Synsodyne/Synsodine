@@ -63,11 +63,11 @@
         moderateText: "قد تكون مصاباً بحساسية الأسنان.",
         moderateDiscount: `للاستفادة من خصم خاص على منتجات Sensodyne`,
         moderateButton: "اضغط هنا",
-        moderateExtra: "استشر طبيبك بخصوص أفضل الحلول للتغلب علي حساسية الأسنان",
+        moderateExtra: `استشر طبيبك بخصوص أفضل الحلول للتغلب علي حساسية الأسنان<br>لمعرفة المزيد عن العناية بصحة الفم والأسنان <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">اضغط هنا</a>`,
         highText: "يبدو أنك تعاني بالفعل من مشكلة حساسية الأسنان.",
         highDiscount: `للاستفادة من خصم خاص على منتجات Sensodyne`,
         highButton: "اضغط هنا",
-        highExtra: "ننصحك بزيارة طبيب الأسنان في أقرب وقت للحصول على العلاج المناسب",
+        highExtra: `ننصحك بزيارة طبيب الأسنان في أقرب وقت للحصول على العلاج المناسب<br>لمعرفة المزيد عن العناية بصحة الفم والأسنان <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">اضغط هنا</a>`,
         dir: "rtl",
         lang: "ar"
       },
@@ -80,11 +80,11 @@
         moderateText: "You may be suffering from tooth sensitivity.",
         moderateDiscount: `To benefit from a special discount on Sensodyne products`,
         moderateButton: "Click here",
-        moderateExtra: "Consult your dentist about the best solutions to overcome tooth sensitivity.",
+        moderateExtra: `Consult your dentist about the best solutions to overcome tooth sensitivity.<br>Learn more about oral and dental health care <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Click here</a>`,
         highText: "It seems you are already suffering from tooth sensitivity problems.",
         highDiscount: `To benefit from a special discount on Sensodyne products`,
         highButton: "Click here",
-        highExtra: "We recommend visiting your dentist as soon as possible to get the right treatment.",
+        highExtra: `We recommend visiting your dentist as soon as possible to get the right treatment.<br>Learn more about oral and dental health care <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Click here</a>`,
         dir: "ltr",
         lang: "en"
       },
@@ -97,11 +97,11 @@
         moderateText: "Vous pourriez souffrir de sensibilité dentaire.",
         moderateDiscount: `Pour bénéficier d'une remise spéciale sur les produits Sensodyne`,
         moderateButton: "Cliquez ici",
-        moderateExtra: "Consultez votre dentiste pour connaître les meilleures solutions afin de surmonter la sensibilité dentaire.",
+        moderateExtra: `Consultez votre dentiste pour connaître les meilleures solutions afin de surmonter la sensibilité dentaire.<br>En savoir plus sur les soins de la santé bucco-dentaire <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Cliquez ici</a>`,
         highText: "Il semble que vous souffriez déjà de problèmes de sensibilité dentaire.",
         highDiscount: `Pour bénéficier d'une remise spéciale sur les produits Sensodyne`,
         highButton: "Cliquez ici",
-        highExtra: "Nous vous recommandons de consulter votre dentiste dès que possible pour obtenir le traitement approprié.",
+        highExtra: `Nous vous recommandons de consulter votre dentiste dès que possible pour obtenir le traitement approprié.<br>En savoir plus sur les soins de la santé bucco-dentaire <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Cliquez ici</a>`,
         dir: "ltr",
         lang: "fr"
       }
@@ -110,8 +110,8 @@
     function getParams() {
       const params = new URLSearchParams(window.location.search);
       return {
-        score: parseInt(params.get("score")) || 0,
-        lang: params.get("lang") || "ar"
+        score: parseInt(params.get("score")) || 50,
+        lang: params.get("lang") || "en"
       };
     }
 
@@ -171,5 +171,4 @@
     };
   </script>
 </body>
-
 </html>
