@@ -6,104 +6,110 @@
   <title>Dental Assessment Results</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    /* Add this style to hide sections by default */
-    .result-section {
-      display: none;
-    }
-    /* This will show the section that the script makes active */
-    .result-section.active {
-      display: block;
-    }
+    .result-section { display: none; }
+    .result-section.active { display: block; }
   </style>
 </head>
 <body>
   <div class="results-container">
     <div id="result-low" class="result-section">
       <h2 id="title-low"></h2>
-      <div class="score-circle low-sensitivity">
-        <span class="score-number">0</span>
-      </div>
+      <div class="score-circle low-sensitivity"><span class="score-number">0</span></div>
       <p id="low-text"></p>
       <p id="low-discount"></p>
-      <button class="noon-button" onclick="window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_')" id="low-button"></button>
+      <button class="noon-button" onclick="logClick('noon-button'); window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_')" id="low-button"></button>
       <div class="combined-line" id="low-extra"></div>
     </div>
-
     <div id="result-moderate" class="result-section">
       <h2 id="title-moderate"></h2>
-      <div class="score-circle moderate-sensitivity">
-        <span class="score-number">0</span>
-      </div>
+      <div class="score-circle moderate-sensitivity"><span class="score-number">0</span></div>
       <p id="moderate-text"></p>
       <p id="moderate-discount"></p>
-      <button class="noon-button" onclick="window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_')" id="moderate-button"></button>
+      <button class="noon-button" onclick="logClick('noon-button'); window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_')" id="moderate-button"></button>
       <p id="moderate-extra"></p>
     </div>
-
     <div id="result-high" class="result-section">
       <h2 id="title-high"></h2>
-      <div class="score-circle high-sensitivity">
-        <span class="score-number">0</span>
-      </div>
+      <div class="score-circle high-sensitivity"><span class="score-number">0</span></div>
       <p id="high-text"></p>
       <p id="high-discount"></p>
-      <button class="noon-button" onclick="window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_')" id="high-button"></button>
+      <button class="noon-button" onclick="logClick('noon-button'); window.open('https://www.noon.com/egypt-en/sensodyne-store/?utm_source=C1000047L&utm_medium=influencer&utm_content=partnerships&utm_campaign=C1000175711N_eg_en_app_sensodynebrandstore_trafficcampaign_noon_both_c1000047l_influencer_partnerships_')" id="high-button"></button>
       <p id="high-extra"></p>
     </div>
   </div>
 
   <script>
+    let currentSubmissionID = null; // Variable to store the submission ID
+
+    function logClick(elementIdentifier) {
+      // IMPORTANT: Make sure this URL is your deployed Apps Script URL
+      const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxiOX45l_y2J8JwM8h3vEgibgYgxQl8QS4U1E2OkdVcGBQw7i5-qA0HqggB69OEq-rTIA/exec"; 
+      
+      const data = {
+        clickedElement: elementIdentifier,
+        submissionID: currentSubmissionID // Pass the stored submission ID
+      };
+
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(WEB_APP_URL, JSON.stringify(data));
+      } else {
+        fetch(WEB_APP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        }).catch(err => console.error(err));
+      }
+    }
+
     const translations = {
       ar: {
         titles: { low: "نتيجتك", moderate: "نتيجتك", high: "نتيجتك" },
         lowText: "انت تتمتع بأسنان سليمة.",
         lowDiscount: `للاستفادة من خصم خاص على منتجات Sensodyne`,
         lowButton: "اضغط هنا",
-        lowExtra: `لمعرفة المزيد عن العناية بصحة الفم والأسنان <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">اضغط هنا</a>`,
+        lowExtra: `لمعرفة المزيد عن العناية بصحة الفم والأسنان <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank" onclick="logClick('leaflet-link')">اضغط هنا</a>`,
         moderateText: "قد تكون مصاباً بحساسية الأسنان.",
         moderateDiscount: `للاستفادة من خصم خاص على منتجات Sensodyne`,
         moderateButton: "اضغط هنا",
-        moderateExtra: `استشر طبيبك بخصوص أفضل الحلول للتغلب علي حساسية الأسنان<br>لمعرفة المزيد عن العناية بصحة الفم والأسنان <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">اضغط هنا</a>`,
+        moderateExtra: `استشر طبيبك بخصوص أفضل الحلول للتغلب علي حساسية الأسنان<br>لمعرفة المزيد عن العناية بصحة الفم والأسنان <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank" onclick="logClick('leaflet-link')">اضغط هنا</a>`,
         highText: "يبدو أنك تعاني بالفعل من مشكلة حساسية الأسنان.",
         highDiscount: `للاستفادة من خصم خاص على منتجات Sensodyne`,
         highButton: "اضغط هنا",
-        highExtra: `ننصحك بزيارة طبيب الأسنان في أقرب وقت للحصول على العلاج المناسب<br>لمعرفة المزيد عن العناية بصحة الفم والأسنان <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">اضغط هنا</a>`,
-        dir: "rtl",
-        lang: "ar"
+        highExtra: `ننصحك بزيارة طبيب الأسنان في أقرب وقت للحصول على العلاج المناسب<br>لمعرفة المزيد عن العناية بصحة الفم والأسنان <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank" onclick="logClick('leaflet-link')">اضغط هنا</a>`,
+        dir: "rtl", lang: "ar"
       },
       en: {
         titles: { low: "Your Result", moderate: "Your Result", high: "Your Result" },
         lowText: "You have healthy teeth.",
         lowDiscount: `To benefit from a special discount on Sensodyne products`,
         lowButton: "Click here",
-        lowExtra: `Learn more about oral and dental health care <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Click here</a>`,
+        lowExtra: `Learn more about oral and dental health care <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank" onclick="logClick('leaflet-link')">Click here</a>`,
         moderateText: "You may be suffering from tooth sensitivity.",
         moderateDiscount: `To benefit from a special discount on Sensodyne products`,
         moderateButton: "Click here",
-        moderateExtra: `Consult your dentist about the best solutions to overcome tooth sensitivity.<br>Learn more about oral and dental health care <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Click here</a>`,
+        moderateExtra: `Consult your dentist about the best solutions to overcome tooth sensitivity.<br>Learn more about oral and dental health care <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank" onclick="logClick('leaflet-link')">Click here</a>`,
         highText: "It seems you are already suffering from tooth sensitivity problems.",
         highDiscount: `To benefit from a special discount on Sensodyne products`,
         highButton: "Click here",
-        highExtra: `We recommend visiting your dentist as soon as possible to get the right treatment.<br>Learn more about oral and dental health care <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Click here</a>`,
-        dir: "ltr",
-        lang: "en"
+        highExtra: `We recommend visiting your dentist as soon as possible to get the right treatment.<br>Learn more about oral and dental health care <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank" onclick="logClick('leaflet-link')">Click here</a>`,
+        dir: "ltr", lang: "en"
       },
       fr: {
         titles: { low: "Votre Résultat", moderate: "Votre Résultat", high: "Votre Résultat" },
         lowText: "Vous avez des dents saines.",
         lowDiscount: `Pour bénéficier d'une remise spéciale sur les produits Sensodyne`,
         lowButton: "Cliquez ici",
-        lowExtra: `En savoir plus sur les soins de la santé bucco-dentaire <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Cliquez ici</a>`,
+        lowExtra: `En savoir plus sur les soins de la santé bucco-dentaire <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank" onclick="logClick('leaflet-link')">Cliquez ici</a>`,
         moderateText: "Vous pourriez souffrir de sensibilité dentaire.",
         moderateDiscount: `Pour bénéficier d'une remise spéciale sur les produits Sensodyne`,
         moderateButton: "Cliquez ici",
-        moderateExtra: `Consultez votre dentiste pour connaître les meilleures solutions afin de surmonter la sensibilité dentaire.<br>En savoir plus sur les soins de la santé bucco-dentaire <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Cliquez ici</a>`,
+        moderateExtra: `Consultez votre dentiste pour connaître les meilleures solutions afin de surmonter la sensibilité dentaire.<br>En savoir plus sur les soins de la santé bucco-dentaire <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank" onclick="logClick('leaflet-link')">Cliquez ici</a>`,
         highText: "Il semble que vous souffriez déjà de problèmes de sensibilité dentaire.",
         highDiscount: `Pour bénéficier d'une remise spéciale sur les produits Sensodyne`,
         highButton: "Cliquez ici",
-        highExtra: `Nous vous recommandons de consulter votre dentiste dès que possible pour obtenir le traitement approprié.<br>En savoir plus sur les soins de la santé bucco-dentaire <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank">Cliquez ici</a>`,
-        dir: "ltr",
-        lang: "fr"
+        highExtra: `Nous vous recommandons de consulter votre dentiste dès que possible pour obtenir le traitement approprié.<br>En savoir plus sur les soins de la santé bucco-dentaire <a href="https://drive.google.com/file/d/1raAUxqxS17m79_4MIUWMtOaJ2IFnudvV/view" target="_blank" onclick="logClick('leaflet-link')">Cliquez ici</a>`,
+        dir: "ltr", lang: "fr"
       }
     };
 
@@ -111,43 +117,33 @@
       const params = new URLSearchParams(window.location.search);
       return {
         score: parseInt(params.get("score")) || 0,
-        lang: params.get("lang") || "ar"
+        lang: params.get("lang") || "ar",
+        submissionID: params.get("sid") || null // Read 'sid' from the URL
       };
     }
 
     function updateContent(score, lang) {
       const t = translations[lang] || translations.ar;
-
       document.documentElement.lang = t.lang;
       document.documentElement.dir = t.dir;
-
-      // Titles
       document.getElementById("title-low").textContent = t.titles.low;
       document.getElementById("title-moderate").textContent = t.titles.moderate;
       document.getElementById("title-high").textContent = t.titles.high;
-
-      // Low
       document.getElementById("low-text").innerHTML = t.lowText;
       document.getElementById("low-discount").innerHTML = t.lowDiscount;
       document.getElementById("low-button").textContent = t.lowButton;
       document.getElementById("low-extra").innerHTML = t.lowExtra;
-
-      // Moderate
       document.getElementById("moderate-text").innerHTML = t.moderateText;
       document.getElementById("moderate-discount").innerHTML = t.moderateDiscount;
       document.getElementById("moderate-button").textContent = t.moderateButton;
       document.getElementById("moderate-extra").innerHTML = t.moderateExtra;
-
-      // High
       document.getElementById("high-text").innerHTML = t.highText;
       document.getElementById("high-discount").innerHTML = t.highDiscount;
       document.getElementById("high-button").textContent = t.highButton;
       document.getElementById("high-extra").innerHTML = t.highExtra;
-
-      // Score logic
+      
       const sections = document.querySelectorAll(".result-section");
-      sections.forEach(section => section.style.display = 'none'); // Use style to hide
-
+      sections.forEach(section => section.style.display = 'none');
       const scoreElements = document.querySelectorAll(".score-number");
       scoreElements.forEach(el => (el.textContent = score));
 
@@ -161,15 +157,18 @@
       } else {
         activeSection = document.getElementById("result-low");
       }
-      activeSection.classList.add("active"); // Add active class
-      activeSection.style.display = 'block'; // Use style to show
+      if (activeSection) {
+        activeSection.classList.add("active");
+        activeSection.style.display = 'block';
+      }
     }
 
     window.onload = () => {
-      const { score, lang } = getParams();
+      const { score, lang, submissionID } = getParams();
+      currentSubmissionID = submissionID; // Store the ID when the page loads
       updateContent(score, lang);
     };
   </script>
 </body>
-
 </html>
+
